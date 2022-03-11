@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\ItemClassifier;
+
 final class GildedRose
 {
     private $items = [];
