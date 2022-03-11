@@ -2,7 +2,7 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\GildedRose;
+use App\GildedRoseLegacy;
 use App\Item;
 
 echo "OMGHAI!\n";
@@ -20,7 +20,7 @@ $items = array(
     new Item('Conjured Mana Cake', 3, 6)
 );
 
-$app = new GildedRose($items);
+$app = new GildedRoseLegacy($items);
 
 $days = 2;
 if (count($argv) > 1) {
