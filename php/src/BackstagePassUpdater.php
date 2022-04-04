@@ -28,7 +28,7 @@ class BackstagePassUpdater extends ItemUpdater
 
     public function updateSellIn()
     {
-        $this->item->seel_in -= 1;
+        $this->item->sell_in -= 1;
     }
 
     public function updateQuality()
@@ -52,13 +52,13 @@ class BackstagePassUpdater extends ItemUpdater
 
     public function update()
     {
-      $this->updateSellIn();
-      $this->updateQuality();
+        $this->updateQuality();
+        $this->updateSellIn();
     }
 
     protected function updateExpired()
     {
-        if($this->item->sell_in < 0){
+        if($this->item->sell_in > 0){
             return true;
         }else{
             return false;

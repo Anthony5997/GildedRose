@@ -21,4 +21,6 @@ class SulfurasUpdater extends ItemUpdater
       $this->item->quality = 80;
     }
 
+
+
 }

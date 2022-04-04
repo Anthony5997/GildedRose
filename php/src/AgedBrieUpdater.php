@@ -31,20 +31,28 @@ class AgedBrieUpdater extends ItemUpdater
     protected function increaseQuality()
     {
         if($this->item->quality < 50){
-            $this->item->quality += 1;
+            if($this->updateExpired()){
+                $this->item->quality += 1;
+            }else{
+                $this->item->quality +=  2;
+            }
         }else{
-            echo 'Qualitée maximum atteinte';
+            $this->item->quality =  50;
         }
     }
 
     public function update()
     {
-      $this->updateSellIn();
-      $this->updateQuality();
+        $this->updateSellIn();
+        $this->updateQuality();
     }
 
     protected function updateExpired()
     {
-      /*TODO*/
+        if($this->item->sell_in < 0){
+            return false;
+          }else{
+            return true;
+          }
     }
 }

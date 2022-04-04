@@ -2,7 +2,9 @@
 
 namespace Test;
 
-class GoldenMasterTest extends \PHPUnit\Framework\TestCase {
+use PHPUnit\Framework\TestCase;
+
+class GoldenMasterTest extends TestCase {
 
     function testGenerateOutput() {
         $output = $this->generateOutput('texttest_fixture_legacy.php');

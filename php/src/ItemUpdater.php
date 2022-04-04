@@ -2,11 +2,11 @@
 
 namespace App;
 
-use App\ItemUpdater;
-
-
-class ConjuredItemUpdater extends ItemUpdater
+class ItemUpdater
 {
+
+    protected $item;
+
     function __construct($item)
     {
         $this->item = $item;
@@ -19,7 +19,7 @@ class ConjuredItemUpdater extends ItemUpdater
 
     protected function decreaseQuality()
     {
-      if($this->updateExpired()){
+      if($this->item->sell_in >= 0 ){
         $this->item->quality -= 1;
         $this->checkQuality();
       }else{
@@ -30,7 +30,7 @@ class ConjuredItemUpdater extends ItemUpdater
 
     public function updateSellIn()
     {
-      $this->item->sell_in -= 1;
+      $this->item->sell_in -=1;
     }
 
     public function updateQuality()
@@ -40,11 +40,11 @@ class ConjuredItemUpdater extends ItemUpdater
 
     protected function increaseQuality()
     {
-        if($this->item->quality < 50){
-            $this->item->quality += 1;
-        }else{
-          $this->item->quality = 50;
-        }
+      if($this->updateExpired()){
+        $this->item->quality += 1;
+      }else{
+        $this->item->quality = 0;
+      }
     }
 
     public function update()
@@ -56,11 +56,11 @@ class ConjuredItemUpdater extends ItemUpdater
     protected function updateExpired()
     {
       if($this->item->sell_in < 0){
-        return false;
-      }else{
-        return true;
-      }
-    }
+          return false;
+        }else{
+          return true;
+        }
+  }
 
     protected function checkQuality(){
       if($this->item->quality <= 0){
@@ -69,3 +69,4 @@ class ConjuredItemUpdater extends ItemUpdater
     }
 
 }
+

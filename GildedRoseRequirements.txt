@@ -36,3 +36,34 @@ for you).
 
 Just for clarification, an item can never have its Quality increase above 50, however "Sulfuras" is a
 legendary item and as such its Quality is 80 and it never alters.
+
+
+    protected function increaseQuality()
+    {
+        if($this->item->quality < 50 && ($this->item->quality + $this->quality_level) < 50){
+            $this->item->quality += $this->quality_level;
+        }else{
+            $this->item->quality = 50;
+        }
+    }
+
+ private $quality_level;
+
+	    private function checkAndUpdateQualityLevel(){
+
+        if($this->item->sell_in  <= 10){
+            $this->quality_level = 2;
+        }else{
+            $this->quality_level = 1; 
+        }
+    }
+
+
+	    protected function updateExpired()
+    {
+        if($this->item->sell_in > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
