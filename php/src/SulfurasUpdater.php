@@ -16,33 +16,9 @@ class SulfurasUpdater extends ItemUpdater
         return "{$this->item}";
     }
 
-    protected function decreaseQuality()
+     public function update()
     {
-      /*TODO*/
+      $this->item->quality = 80;
     }
 
-    public function updateSellIn()
-    {
-      /*TODO*/
-    }
-
-    public function updateQuality()
-    {
-      /*TODO*/
-    }
-
-    protected function increaseQuality()
-    {
-      /*TODO*/
-    }
-
-    public function update()
-    {
-      /*TODO*/
-    }
-
-    protected function updateExpired()
-    {
-      /*TODO*/
-    }
 }
