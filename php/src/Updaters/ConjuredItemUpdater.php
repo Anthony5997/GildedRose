@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Updaters;
 
-use App\ItemUpdater;
+use App\Item;
+use App\Updaters\ItemUpdater;
 
 
 class ConjuredItemUpdater extends ItemUpdater
@@ -67,5 +68,13 @@ class ConjuredItemUpdater extends ItemUpdater
         $this->item->quality = 0;
       }
     }
+
+    public static function resolve(Item $item){
+      return ($item->name === "Conjured Mana Cake");
+    }
+  
+    public static function getMyInstance($item){
+      return new ConjuredItemUpdater($item);
+    } 
 
 }

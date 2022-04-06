@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Updaters;
 
-use App\ItemUpdater;
+use App\Updaters\ItemUpdater;
+use App\Item;
 
 class AgedBrieUpdater extends ItemUpdater
 {
@@ -55,4 +56,12 @@ class AgedBrieUpdater extends ItemUpdater
             return true;
           }
     }
+
+    public static function resolve(Item $item){
+        return ($item->name === "Aged Brie");
+    }
+
+    public static function getMyInstance($item){
+        return new AgedBrieUpdater($item);
+    } 
 }

@@ -33,8 +33,8 @@ final class Item
         return "{$this->name}, {$this->sell_in}, {$this->quality}";
     }
 
-    public function update()
-    {
+    // public function update()
+    // {
         
-    }
+    // }
 }

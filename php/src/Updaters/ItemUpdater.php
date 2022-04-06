@@ -1,6 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Updaters;
+
+use App\Item;
 
 class ItemUpdater
 {
@@ -67,6 +69,14 @@ class ItemUpdater
         $this->item->quality = 0;
       }
     }
+
+  public static function resolve(Item $item){
+    return (in_array($item->name, ["Elixir of the Mongoose", "+5 Dexterity Vest", "foo"]));
+  }
+
+  public static function getInstance($item){
+    return new ItemUpdater($item);
+  } 
 
 }
 

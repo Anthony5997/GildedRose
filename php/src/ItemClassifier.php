@@ -1,41 +1,49 @@
 <?php
 
 namespace App;
-use App\AgedBrieUpdater;
-use App\BackstagePassUpdater;
-use App\ConjuredItemUpdater;
-use App\SulfurasUpdater;
-use App\ItemUpdater;
+use App\UpdatersFactory;
+use App\Updaters\AgedBrieUpdater;
+use App\Updaters\BackstagePassUpdater;
+use App\Updaters\ConjuredItemUpdater;
+use App\Updaters\SulfurasUpdater;
+use App\Updaters\ItemUpdater;
+use App\Item;
 
 //This classed is a some sort of factory used to create a new Updater based on item name
 class ItemClassifier
 {
+   public function getInstance($item){
+      $updaters = $this->getNameSpace();
 
-	/*TODO*/
+      
+      foreach ($updaters as $updater) {
+      
+         if($updater::resolve($item)){
+     
+            return new UpdatersFactory($updater, $item);
+         }
+      }
+   }
 
-    public function categorize($item)
-    {
-       switch ($item->name) {
-          case 'Aged Brie':
-             return new AgedBrieUpdater($item);
-             break;
-         case 'Sulfuras, Hand of Ragnaros':
-            return new SulfurasUpdater($item);
-            break;
-         case 'Backstage passes to a TAFKAL80ETC concert':
-            return new BackstagePassUpdater($item);
-            break;
-         case 'Conjured Mana Cake':
-            return new ConjuredItemUpdater($item);
-            break;             
-          default:
-            return new ItemUpdater($item);
-             break;
-       }
-    }
+   public function getNameSpace(){
 
-    public function update()
-    {
-       $this->item->update();
-    }
+   $fileList = glob('src/Updaters/*.php');
+   $classListArray = [];
+   foreach($fileList as $filename){
+      if(is_file($filename)){
+         $class = explode('/', $filename);
+         $class2 = explode('.', $class[2]);
+         $classList = $class2[0];
+         array_push($classListArray, "\\App\\Updaters\\".$classList);
+      }   
+   }
+   return $classListArray;
+   }
+   
+   public function categorize($item)
+   {
+      $instance = $this->getInstance($item);
+      return $instance->create();
+   }
 }
+

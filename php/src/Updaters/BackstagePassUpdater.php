@@ -1,8 +1,9 @@
 <?php
 
-namespace App;
+namespace App\Updaters;
 
-use App\ItemUpdater;
+use App\Item;
+use App\Updaters\ItemUpdater;
 
 
 class BackstagePassUpdater extends ItemUpdater
@@ -64,4 +65,12 @@ class BackstagePassUpdater extends ItemUpdater
             return false;
         }
     }
+    
+    public static function resolve(Item $item){
+        return ($item->name === "Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    public static function getMyInstance($item){
+        return new BackstagePassUpdater($item);
+    } 
 }      

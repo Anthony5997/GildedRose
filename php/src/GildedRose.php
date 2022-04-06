@@ -26,8 +26,9 @@ final class GildedRose
         $classifier = new ItemClassifier();
 
         $updater = $classifier->categorize($item);
-
+       
         $updater->update();
     }
+    
 
 }
