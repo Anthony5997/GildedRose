@@ -12,20 +12,21 @@ use App\Item;
 //This classed is a some sort of factory used to create a new Updater based on item name
 class ItemClassifier
 {
-   public function getInstance($item){
+   public function getInstance($item):string
+   {
       $updaters = $this->getNameSpace();
 
-      
       foreach ($updaters as $updater) {
       
          if($updater::resolve($item)){
      
-            return new UpdatersFactory($updater, $item);
+            return $updater;
          }
       }
    }
 
-   public function getNameSpace(){
+   public function getNameSpace():array
+   {
 
    $fileList = glob('src/Updaters/*.php');
    $classListArray = [];
@@ -40,10 +41,10 @@ class ItemClassifier
    return $classListArray;
    }
    
-   public function categorize($item)
+   public function categorize($item):string
    {
       $instance = $this->getInstance($item);
-      return $instance->create();
+      return $instance;
    }
 }
 

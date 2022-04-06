@@ -5,14 +5,13 @@ namespace App\Updaters;
 use App\Item;
 use App\Updaters\ItemUpdater;
 
-
 class BackstagePassUpdater extends ItemUpdater
 {
 
-    private $quality_level;
+    private int $quality_level;
 
-    private function checkAndUpdateQualityLevel(){
-
+    private function checkAndUpdateQualityLevel():void
+    {
         if($this->item->sell_in  <= 5){
             $this->quality_level = 3;
         }elseif($this->item->sell_in  <= 10){
@@ -22,17 +21,17 @@ class BackstagePassUpdater extends ItemUpdater
         }
     }
 
-    protected function decreaseQuality()
+    protected function decreaseQuality():void
     {
       $this->item->quality = 0;
     }
 
-    public function updateSellIn()
+    public function updateSellIn():void
     {
         $this->item->sell_in -= 1;
     }
 
-    public function updateQuality()
+    public function updateQuality():void
     {
         if($this->updateExpired()){
             $this->checkAndUpdateQualityLevel();
@@ -42,7 +41,7 @@ class BackstagePassUpdater extends ItemUpdater
         }
     }
 
-    protected function increaseQuality()
+    protected function increaseQuality():void
     {
         if($this->item->quality < 50 && ($this->item->quality + $this->quality_level) < 50){
             $this->item->quality += $this->quality_level;
@@ -51,13 +50,13 @@ class BackstagePassUpdater extends ItemUpdater
         }
     }
 
-    public function update()
+    public function update():void
     {
         $this->updateQuality();
         $this->updateSellIn();
     }
 
-    protected function updateExpired()
+    protected function updateExpired():bool
     {
         if($this->item->sell_in > 0){
             return true;
@@ -66,11 +65,13 @@ class BackstagePassUpdater extends ItemUpdater
         }
     }
     
-    public static function resolve(Item $item){
+    public static function resolve(Item $item):bool
+    {
         return ($item->name === "Backstage passes to a TAFKAL80ETC concert");
     }
 
-    public static function getMyInstance($item){
+    public static function getInstance(Item $item):self
+    {
         return new BackstagePassUpdater($item);
     } 
 }      

@@ -1,19 +1,21 @@
 <?php
 
 namespace App;
+use App\UpdatersInterface;
 
-use App\ItemClassifier;
 
 final class GildedRose
 {
     private $items = [];
+    private $directory;
 
-    public function __construct($items)
+    public function __construct($items, DirectoryFactories $directoryFactories)
     {
         $this->items = $items;
+        $this->directory = $directoryFactories;
     }
 
-    public function updateQuality()
+    public function updateQuality():void
     {
         foreach ($this->items as $item) {
             $this->updateItem($item);
@@ -21,13 +23,12 @@ final class GildedRose
     }
 
 
-    public function updateItem($item)
+    public function updateItem($item):void
     {
-        $classifier = new ItemClassifier();
-
-        $updater = $classifier->categorize($item);
+        $updaterToInstanciate =  $this->directory->itemClassifier->categorize($item);
+        $instance = $this->directory->updater->create($updaterToInstanciate, $item);
        
-        $updater->update();
+        $instance->update();
     }
     
 

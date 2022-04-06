@@ -2,22 +2,22 @@
 
 namespace App;
 
-use App\Updaters\ItemUpdater;
-use App\Item;
+use App\Interfaces\UpdatersInterface;
+
 
 class UpdatersFactory
 {
-    protected $updater;
-    protected $item;
+    // protected $updater;
+    // protected $item;
 
-    function __construct($updater, $item)
-    {
-        $this->updater = $updater;
-        $this->item = $item;
-    }
+    // function __construct()
+    // {
+        // $this->updater = $updater;
+        // $this->item = $item;
+    // }
     
-    public function create(){
-        
-        return new $this->updater($this->item);
+    public function create($updater, $item):UpdatersInterface
+    {
+        return $updater::getInstance($item);
     }
 }

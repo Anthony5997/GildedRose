@@ -2,23 +2,18 @@
 
 namespace App;
 
-use App\Updaters\ItemUpdater;
-use App\Item;
 use App\UpdatersFactory;
 
 class DirectoryFactories
 {
-    protected $updater;
-    protected $item;
+    public UpdatersFactory $updater;
+    public ItemClassifier $itemClassifier;
 
-    function __construct($updater, $item)
+    function __construct()
     {
-        $this->updater = $updater;
-        $this->item = $item;
+        $this->updater = new UpdatersFactory();
+        $this->itemClassifier =  new ItemClassifier();
     }
-    
-    public function create(){
-        
-        return new $this->updater($this->item);
-    }
+
+
 }

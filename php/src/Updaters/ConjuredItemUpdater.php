@@ -5,20 +5,19 @@ namespace App\Updaters;
 use App\Item;
 use App\Updaters\ItemUpdater;
 
-
 class ConjuredItemUpdater extends ItemUpdater
 {
-    function __construct($item)
+    function __construct(Item $item)
     {
         $this->item = $item;
     }
 
-    public function __toString()
+    public function __toString():string
     {
         return "{$this->item}";
     }
 
-    protected function decreaseQuality()
+    protected function decreaseQuality():void
     {
       if($this->updateExpired()){
         $this->item->quality -= 1;
@@ -29,17 +28,17 @@ class ConjuredItemUpdater extends ItemUpdater
       }
     }
 
-    public function updateSellIn()
+    public function updateSellIn():void
     {
       $this->item->sell_in -= 1;
     }
 
-    public function updateQuality()
+    public function updateQuality():void
     {
       $this->decreaseQuality();
     }
 
-    protected function increaseQuality()
+    protected function increaseQuality():void
     {
         if($this->item->quality < 50){
             $this->item->quality += 1;
@@ -48,13 +47,13 @@ class ConjuredItemUpdater extends ItemUpdater
         }
     }
 
-    public function update()
+    public function update():void
     {
       $this->updateSellIn();
       $this->updateQuality();
     }
 
-    protected function updateExpired()
+    protected function updateExpired():bool
     {
       if($this->item->sell_in < 0){
         return false;
@@ -63,17 +62,20 @@ class ConjuredItemUpdater extends ItemUpdater
       }
     }
 
-    protected function checkQuality(){
+    protected function checkQuality():void
+    {
       if($this->item->quality <= 0){
         $this->item->quality = 0;
       }
     }
 
-    public static function resolve(Item $item){
+    public static function resolve(Item $item):bool
+    {
       return ($item->name === "Conjured Mana Cake");
     }
   
-    public static function getMyInstance($item){
+    public static function getInstance(Item $item):self
+    {
       return new ConjuredItemUpdater($item);
     } 
 
