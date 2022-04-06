@@ -1,18 +1,16 @@
 <?php
 
 namespace App;
-use App\UpdatersInterface;
-
 
 final class GildedRose
 {
-    private $items = [];
-    private $directory;
+    private array $items = [];
+    private DirectorFactories $director;
 
-    public function __construct($items, DirectoryFactories $directoryFactories)
+    public function __construct(array $items, DirectorFactories $directorFactories)
     {
         $this->items = $items;
-        $this->directory = $directoryFactories;
+        $this->director = $directorFactories;
     }
 
     public function updateQuality():void
@@ -23,10 +21,10 @@ final class GildedRose
     }
 
 
-    public function updateItem($item):void
+    public function updateItem(Item $item):void
     {
-        $updaterToInstanciate =  $this->directory->itemClassifier->categorize($item);
-        $instance = $this->directory->updater->create($updaterToInstanciate, $item);
+        $updaterToInstanciate =  $this->director->itemClassifier->categorize($item);
+        $instance = $this->director->updater->create($updaterToInstanciate, $item);
        
         $instance->update();
     }

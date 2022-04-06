@@ -73,10 +73,4 @@ class ConjuredItemUpdater extends ItemUpdater
     {
       return ($item->name === "Conjured Mana Cake");
     }
-  
-    public static function getInstance(Item $item):self
-    {
-      return new ConjuredItemUpdater($item);
-    } 
-
 }

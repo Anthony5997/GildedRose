@@ -1,30 +1,10 @@
 <?php
 
 namespace App;
-use App\UpdatersFactory;
-use App\Updaters\AgedBrieUpdater;
-use App\Updaters\BackstagePassUpdater;
-use App\Updaters\ConjuredItemUpdater;
-use App\Updaters\SulfurasUpdater;
-use App\Updaters\ItemUpdater;
-use App\Item;
+use App\Interfaces\ClassifiersInterface;
 
-//This classed is a some sort of factory used to create a new Updater based on item name
-class ItemClassifier
+class ItemClassifier implements ClassifiersInterface
 {
-   public function getInstance($item):string
-   {
-      $updaters = $this->getNameSpace();
-
-      foreach ($updaters as $updater) {
-      
-         if($updater::resolve($item)){
-     
-            return $updater;
-         }
-      }
-   }
-
    public function getNameSpace():array
    {
 
@@ -43,8 +23,12 @@ class ItemClassifier
    
    public function categorize($item):string
    {
-      $instance = $this->getInstance($item);
-      return $instance;
+      $updaters = $this->getNameSpace();
+      foreach ($updaters as $updater) {
+         if($updater::resolve($item)){
+            return $updater;
+         }
+      }
    }
 }
 

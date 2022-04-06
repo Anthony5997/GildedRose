@@ -76,11 +76,5 @@ class ItemUpdater implements UpdatersInterface
   {
     return (in_array($item->name, ["Elixir of the Mongoose", "+5 Dexterity Vest", "foo"]));
   }
-
-  public static function getInstance(Item $item):self
-  {
-    return new ItemUpdater($item);
-  } 
-
 }
 

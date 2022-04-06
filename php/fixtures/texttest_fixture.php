@@ -2,9 +2,11 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use App\DirectoryFactories;
+use App\DirectorFactories;
 use App\GildedRose;
 use App\Item;
+use App\ItemClassifier;
+use App\UpdatersFactory;
 
 echo "OMGHAI!\n";
 
@@ -21,8 +23,8 @@ $items = array(
     new Item('Conjured Mana Cake', 3, 6)
 );
 
-
-$app = new GildedRose($items, new DirectoryFactories);
+$directorFactories = new DirectorFactories(new UpdatersFactory, new ItemClassifier);
+$app = new GildedRose($items, $directorFactories);
 
 $days = 2;
 if (count($argv) > 1) {

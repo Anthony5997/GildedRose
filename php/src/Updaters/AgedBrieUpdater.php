@@ -13,7 +13,7 @@ class AgedBrieUpdater extends ItemUpdater
     {
         $this->item = $item;
     }
-
+    
     public function __toString():string
     {
         return "{$this->item}";
@@ -60,10 +60,5 @@ class AgedBrieUpdater extends ItemUpdater
     public static function resolve($item):bool
     {
         return ($item->name === "Aged Brie");
-    }
-
-    public static function getInstance($item):self
-    {
-        return new AgedBrieUpdater($item);
-    } 
+    }   
 }

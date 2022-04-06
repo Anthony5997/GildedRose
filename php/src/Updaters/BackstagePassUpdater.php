@@ -69,9 +69,4 @@ class BackstagePassUpdater extends ItemUpdater
     {
         return ($item->name === "Backstage passes to a TAFKAL80ETC concert");
     }
-
-    public static function getInstance(Item $item):self
-    {
-        return new BackstagePassUpdater($item);
-    } 
 }      
